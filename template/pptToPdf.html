@@ -1,0 +1,98 @@
+{% extends 'index.html' %}
+{%block title%}Convert Word to Pdf
+{%endblock%}
+{%block style%}
+<style>
+    .tool-header {
+        width: 700px;
+    }
+
+    .btn-holder {
+        width: 600px;
+    }
+
+
+
+    .select_file_btn {
+        height: 80px;
+        font-size: 10em;
+        border-radius: 50px;
+    }
+
+    .drive_btn {
+        margin-top: 15px;
+        border: none;
+        background-color: white;
+    }
+
+    .convert_btn {
+        height: 80px;
+        width: 300px;
+        font-size: 10em;
+        border-radius: 50px;
+    }
+</style>
+{%endblock%}
+{%block body%}
+
+<div class="container row pt-5">
+    <div class="col-2"></div>
+    <div class="col-8">
+            <h3 style="text-align: center;">Convert PPT to PDF</h3>
+            <h5 style="text-align: center;">Make PPT files easy to read by converting them to PDF</h5>
+            <form id="convert-form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class=" mt-4 row" id="upload_btn_div">
+                    <div class="col-md-4"></div>
+
+                    <div class="col-md-4 upload-btn" id="main_upload-btn">
+                        <input type="file" id="file-input" name="ppt_file" style="display: none;">
+                        <button type="button" class="btn btn-success select_file_btn w-100"
+                            id="select-file-dialog">Select
+                            Docx File</button>
+                    </div>
+
+                    <div class="col-md-4 convert_btn_div" id="convert-btn-div" style="display: none;">
+                        <button type="button" class="btn btn-success convert_btn" id="convert-file-dialog">Convert
+                            File</button>
+                    </div>
+
+                    <div class="col-md-4 drive-btn" id="drive-btn_icon">
+                        <button type="submit" class="drive_btn"><i class="fa-brands fa-google-drive  fa-2xl"
+                                style="color: green;"></i></button>
+                    </div>
+                </div>
+                
+            </form>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+<script>
+    document.getElementById('select-file-dialog').addEventListener('click', function () {
+        document.getElementById('file-input').click();
+    });
+    document.getElementById('file-input').addEventListener('change', function () {
+        const selectedFile = this.files[0];
+        if (selectedFile) {
+            console.log(selectedFile.name);
+            console.log(selectedFile.size);
+            document.getElementById('main_upload-btn').style.display = "none"; 
+            document.getElementById('drive-btn_icon').style.display = "none";
+            document.getElementById('convert-btn-div').style.display = "block";
+        }
+    });
+
+    document.getElementById('convert-file-dialog').addEventListener('click', function () {
+        document.getElementById('convert-form').submit();
+        const convertBtnDiv = document.getElementById('convert-btn-div');
+        const previousContent = convertBtnDiv.innerHTML;
+        document.getElementById('convert-btn-div').innerHTML = '<div class="spinner-border text-success" role="status"></div>'
+        setTimeout(function() {
+            convertBtnDiv.innerHTML = previousContent;
+            document.getElementById('convert-file-dialog').disabled = true
+        }, 3000);
+    });
+</script>
+
+
+{%endblock%}

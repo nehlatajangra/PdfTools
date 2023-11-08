@@ -1,0 +1,63 @@
+{% extends 'index.html' %}
+{%block title%}Convert HTML to Pdf
+{%endblock%}
+{%block style%}
+<style>
+    .container-fluid {
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        display: list-item;
+        width: 500px;
+    }
+    .tool-header{
+        width: 700px;
+    }
+
+    .btn-holder {
+        width: 600px;
+    }
+    .upload-btn{
+        margin-bottom: 10px;
+        margin-left: 160px;
+    }
+    .drive-btn{
+        width: 60px;
+        left: 20px;
+    }
+    .select_file_btn {
+        height: 80px;
+        width: 300px;
+        font-size: 10em;
+    }
+</style>
+{%endblock%}
+{%block body%}
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-10">
+        <div class="container-fluid mt-5">
+            <div class="tool-header">
+                <h3 style="text-align: center;">Add watermark into a PDF</h3>
+                <h5 style="text-align: center;">
+                    Stamp an image or text over your PDF in seconds. Choose the typography, transparency and position.</h5>
+            </div>
+            <div class="btn-holder row mt-5">
+                <div class="col upload-btn ">
+                    <button type="submit" class="btn btn-success  select_file_btn">Select Docx File</button>
+                </div>
+                <div class="col-2 drive-btn mt-2">
+                    <i class="fa-brands fa-google-drive fa-2xl" style="color: green;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-2"></div>
+
+</div>
+
+{%endblock%}
+
+
+              

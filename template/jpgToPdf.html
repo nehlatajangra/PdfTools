@@ -1,0 +1,108 @@
+{% extends 'index.html' %}
+{%block title%}Convert JPG to Pdf
+{%endblock%}
+{%block style%}
+<style>
+    .tool-header {
+        width: 700px;
+    }
+
+    .btn-holder {
+        width: 600px;
+    }
+
+    .drive-btn {
+        width: 60px;
+        left: 20px;
+    }
+
+    .select_file_btn {
+        height: 80px;
+        width: 300px;
+        font-size: 10em;
+        border-radius: 50px;
+    }
+
+    .drive_btn {
+        margin-top: 5px;
+        border: none;
+        background-color: white;
+    }
+
+    .convert_btn_div {
+        display: block;
+        width: 600px;
+        margin-bottom: 10px;
+        margin-left: 160px;
+        display: none;
+    }
+
+    .convert_btn {
+        height: 80px;
+        width: 300px;
+        font-size: 10em;
+        border-radius: 50px;
+    }
+    .btn-holder{
+        display: flex; /* Use flexbox to center align contents */
+        justify-content: center; /* Center vertically */
+        align-items: center; /* Center horizontally */
+        text-align: center;
+    }
+</style>
+{%endblock%}
+{%block body%}
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="container-fluid mt-5">
+            <h3 style="text-align: center;">Convert JPG to PDF</h3>
+            <h5 style="text-align: center;">Convert JPG images to PDF in seconds. Easily adjust orientation and margins.</h5>
+            <form id="convert-form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="btn-holder row mt-5" id="upload_btn_div">
+                    <div class="col-md-4"></div>
+                    <div class="col-6 upload-btn">
+                        <input type="file" id="file-input" name="img_file" style="display: none;">
+                        <button type="button" class="btn btn-success select_file_btn" id="select-file-dialog">Select
+                            Docx File</button>
+                    </div>
+                    <div class="col-2 drive-btn ">
+                        <button type="submit" class="drive_btn"><i class="fa-brands fa-google-drive fa-2xl"
+                                style="color: green;"></i></button>
+                    </div>
+                </div>
+                <div class="convert_btn_div mt-5" id="convert-btn-div" style="display: none;">
+                    <button type="button" class="btn btn-success convert_btn" id="convert-file-dialog">Convert
+                        File</button>
+                </div>
+            </form>
+            {% if pdf_download_link %}
+            <a href="{{ pdf_download_link }}" download>Download PDF</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<script>
+    document.getElementById('select-file-dialog').addEventListener('click', function () {
+        document.getElementById('file-input').click();
+    });
+    document.getElementById('file-input').addEventListener('change', function () {
+        const selectedFile = this.files[0];
+        if (selectedFile) {
+            console.log(selectedFile.name);
+            console.log(selectedFile.size);
+            document.getElementById('upload_btn_div').style.display = "none";
+            document.getElementById('convert-btn-div').style.display = "block";
+        }
+    });
+
+    document.getElementById('convert-file-dialog').addEventListener('click', function () {
+        document.getElementById('convert-form').submit();
+    });
+</script>
+
+{%endblock%}
