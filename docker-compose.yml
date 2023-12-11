@@ -1,1 +1,26 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:7000
+
+    container_name: pdftool
+
+    volumes:
+      - ./:/PdfToolsApp:Z
+
+      - PdfToolsApp-media:/app/media
+      - PdfToolsApp-static:/app/static
+
+    ports:
+      - "7000:7000"
+    
+volumes:
+  PdfToolsApp-media:
+  PdfToolsApp-static:
+
+
+
+
 

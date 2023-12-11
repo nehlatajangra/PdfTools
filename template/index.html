@@ -33,7 +33,10 @@
       text-decoration: none;
       color: black
     }
-
+    a {
+      text-decoration: none;
+      color: black
+    }
     ul.list-unstyled li a:hover {
       text-decoration: underline;
       color: green;
@@ -96,7 +99,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top"
       id="navbar">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">ToolBook</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -106,25 +109,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Organize
-                Pdf <i
-                  class="fa-solid fa-caret-down"></i></a>
+              <a class="nav-link active" aria-current="page" href="{% url 'homePage' %}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active " href="#">Optimize pdf <i
-                  class="fa-solid fa-caret-down"></i></a>
+              <a class="nav-link active " href="#toolHolder">Tools</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">Convert to pdf <i
-                  class="fa-solid fa-caret-down"></i></a>
+              <a class="nav-link active" href="#customer">About </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">Convert from pdf <i
-                  class="fa-solid fa-caret-down"></i></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Edit pdf <i
-                  class="fa-solid fa-caret-down"></i></a>
+              <a class="nav-link active" href="{% url 'contactUs' %}">Contact Us </a>
             </li>
 
           </ul>
@@ -137,40 +131,44 @@
       </div>
     </nav>
     {% load static %}
-    <div class="container-fluid ">
+    <div class="container-fluid">
       {%block body%}
 
-      <div class="container col-xxl-8 px-4 py-5">
-        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-          <div class="col-10 col-sm-8 col-lg-6">
-            <img src="bootstrap-themes.png" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
-          </div>
+      <div class="container px-5  py-5 mt-4">
+        <div class="row  ">
           <div class="col-lg-6">
-            <h1 class="display-5 fw-bold lh-1 mb-3">Responsive left-aligned hero with image</h1>
-            <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+            <h1 class="display-5 fw-bold  mb-3 ">Responsive left-aligned hero with image</h1>
+            <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap, the world's most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
               <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
               <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
             </div>
           </div>
+          <div class="col-10 col-sm-8 col-lg-6 mt-5">
+            <img src='{% static "icons8-image-editing-48.png" %}' class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="300" height="100" loading="lazy">
+          </div>
+
         </div>
       </div>
 
-      <div class="tool-holder pt-5">
+      <div class="tool-holder "style="height:900px" id="toolHolder">
         <div class="row mt-2" style="height: 280px;">
           <div class="col-md-1"></div>
           <div class="col-md-10 ">
             <div class="row">
               <div class="col-md-4">
-                <div class="card">
+                <a href="{% url 'wordToPdf'  %}">
+                <div  class="card">
                   <img src='{% static "icons8-microsoft-word-48.png" %}' />
                   <div class="card-body">
                     <h3 class="card-text">Word To Pdf</h3>
                     <p>Convert Microsoft Word file to Pdf</p>
                   </div>
                 </div>
+                </a>
               </div>
               <div class="col-md-4">
+                <a href="{% url 'pptToPdf'  %}">
                 <div class="card">
                   <img src='{% static "icons8-power-point-48.png" %}' />
                   <div class="card-body">
@@ -178,8 +176,10 @@
                     <p>Convert Microsoft PowerPoint files to Pdf</p>
                   </div>
                 </div>
+                </a>
               </div>
               <div class="col-md-4">
+                <a href="{% url 'excelToPdf'  %}">
                 <div class="card">
                   <img src='{% static "icons8-excel-48.png" %}' />
                   <div class="card-body">
@@ -187,6 +187,7 @@
                     <p>Convert Microsoft Excel file to Pdf</p>
                   </div>
                 </div>
+              </a>
               </div>
             </div>
           </div>
@@ -197,6 +198,7 @@
           <div class="col-md-10 ">
             <div class="row">
               <div class="col-md-4">
+                <a href="{% url 'pdfToWord'  %}">
                 <div class="card">
                   <img src='{% static "icons8-pdf-48.png" %}' />
                   <div class="card-body">
@@ -204,8 +206,10 @@
                     <p>Convert Pdf to Microsoft Word file</p>
                   </div>
                 </div>
+                </a>
               </div>
               <div class="col-md-4">
+                <a href="{% url 'pdfToJpg'  %}">
                 <div class="card">
                   <img src='{% static "icons8-pdf-48.png" %}' />
                   <div class="card-body">
@@ -213,8 +217,10 @@
                     <p>Convert Pdf to Image</p>
                   </div>
                 </div>
+                </a>
               </div>
               <div class="col-md-4">
+                <a href="{% url 'jpgtoPdf'  %}">
                 <div class="card">
                   <img src='{% static "icons8-image-48.png" %}' />
                   <div class="card-body">
@@ -222,6 +228,7 @@
                     <p>Cinvert Image to Pdf</p>
                   </div>
                 </div>
+                </a>
               </div>
             </div>
           </div>
@@ -232,6 +239,7 @@
           <div class="col-md-10 ">
             <div class="row">
               <div class="col-md-4">
+                <a href="{% url 'pngToJpg'  %}">
                 <div class="card">
                   <img src='{% static "icons8-png-48.png" %}' />
                   <div class="card-body">
@@ -239,18 +247,20 @@
                     <p>Convert Png Image to Jpg Image</p>
                   </div>
                 </div>
+                </a>
               </div>
               <div class="col-md-4">
-                <div class="card">
+                <a href="{% url 'jpgToPng'  %}">
+                  <div class="card">
                   <img src='{% static "icons8-jpg-48.png" %}' />
                   <div class="card-body">
                     <h3 class="card-text">Jpg to Png</h3>
                     <p>Convert Jpg Image to Png Image</p>
                   </div>
                 </div>
+                </a>
               </div>
               <div class="col-md-4">
-
               </div>
             </div>
           </div>
@@ -258,8 +268,8 @@
         </div>
       </div>
 
-      <div class="customer mt-3">
-        <h3>Customers around the world count on Nitro</h3>
+      <div class="customer mt-3" id="customer">
+        <h3>Customers around the world count on ToolBook</h3>
         <div class="row mt-5">
           <div class="col-md-1"></div>
           <div class="col-md-10">
@@ -267,7 +277,7 @@
               <div class="col-md-4">
                 <div class="card">
                   <div class="card-body">
-                    <h2 class="card-text mt-3">90%</h2>
+                    <h2 class="card-text mt-3" id="counter">%</h2>
                     <p>Customer satisfaction rating</p>
                   </div>
                 </div>
@@ -275,7 +285,7 @@
               <div class="col-md-4">
                 <div class="card">
                   <div class="card-body mt-3">
-                    <h2 class="card-text">64%</h2>
+                    <h2 class="card-text" id="counter2">64%</h2>
                     <p>Customer satisfaction rating</p>
                   </div>
                 </div>
@@ -283,7 +293,7 @@
               <div class="col-md-4">
                 <div class="card">
                   <div class="card-body mt-3">
-                    <h2 class="card-text">694%</h2>
+                    <h2 class="card-text" id="counter3">94%</h2>
                     <p>Customer satisfaction rating</p>
                   </div>
                 </div>
@@ -299,53 +309,49 @@
         <div class="ListAccordian-header col-md-4">
           <h3>Frequently Asked Questions</h3>
           <div>
-            Questions about Nitro's PDF editor or eSign software? Learn about
+            Questions about ToolBook PDF editor or eSign software? Learn about
             our software, trial periods and more or contact us today.
           </div>
         </div>
         <div class="accordian col-md-6">
           <div class="card">
             <div class="card-header">
-              <h3> Heading one</h3>
+              <h3> Heading One</h3>
               <span class="fa fa-minus"></span>
             </div>
             <div class="card-body active">
               <p>
-                jfhjshf jfhjdf jhdjf j
-              </p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.              </p>
             </div>
           </div>
           <div class="card">
             <div class="card-header">
-              <h3> Heading one</h3>
+              <h3> Heading Two</h3>
               <span class="fa fa-plus"></span>
             </div>
             <div class="card-body ">
               <p>
-                jfhjshf jfhjdf jhdjf j
-              </p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.              </p>
             </div>
           </div>
           <div class="card">
             <div class="card-header">
-              <h3> Heading one</h3>
+              <h3> Heading Three</h3>
               <span class="fa fa-plus"></span>
             </div>
             <div class="card-body ">
               <p>
-                jfhjshf jfhjdf jhdjf j
-              </p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.              </p>
             </div>
           </div>
           <div class="card">
             <div class="card-header">
-              <h3> Heading one</h3>
+              <h3> Heading Four</h3>
               <span class="fa fa-plus"></span>
             </div>
             <div class="card-body ">
               <p>
-                jfhjshf jfhjdf jhdjf j
-              </p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.              </p>
             </div>
           </div>
         </div>
@@ -368,19 +374,35 @@
       </div>
 
       <script>
+        
         $(document).ready(function(){
-            $('.card-header').click(function(){
+            $('.ListAccordian .card-header').click(function(){
                 if ($(this).next(".card-body").hasClass("active")){
                     $(this).next(".card-body").removeClass("active").slideUp()
                     $(this).children("span").removeClass("fa-minus").addClass("fa-plus")                }
                 else{
-                $(".card .card-body").removeClass("active").slideUp()
-                $(".card .card-header span").removeClass("fa-minus").addClass("fa-plus")
+                $(".ListAccordian .card .card-body").removeClass("active").slideUp()
+                $(".ListAccordian .card .card-header span").removeClass("fa-minus").addClass("fa-plus")
                 $(this).next(".card-body").addClass("active").slideDown()
                 $(this).children("span").removeClass("fa-plus").addClass("fa-minus")
                 }
             })
         })
+
+
+        let counts = setInterval(updated);
+        let upto = 0;
+        function updated() {
+            let count = document.getElementById("counter");
+            count.innerHTML = ++upto;
+            if (upto === 90) {
+                clearInterval(counts);
+            }
+        }
+
+        
+
+      
       </script>
       {%endblock%}
     </div>

@@ -13,4 +13,4 @@ def pngToJpgView(request):
     #     response = HttpResponse(jpeg_buffer.getvalue(), content_type="image/jpeg")
     #     response['Content-Disposition'] = f'attachment; filename=converted_image.jpg'
     #     return response
-    return render(request,'pdfToJpg.html')
+    return render(request,'pngToJpg.html')

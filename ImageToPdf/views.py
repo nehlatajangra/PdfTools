@@ -28,4 +28,7 @@ def jpgToPdfView(request):
 
 
 def HomePage(request):
-    return render(request,'Index.html')
+    return render(request,'index.html')
+
+def ContactUsView(request):
+    return render(request,'contactUs.html')
