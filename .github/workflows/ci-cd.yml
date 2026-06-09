@@ -23,4 +23,3 @@ jobs:
               "Api-Key": "${{ secrets.API_KEY }}",
               "Content-Type": "application/json"
             }
-
