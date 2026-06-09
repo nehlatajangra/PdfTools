@@ -16,7 +16,7 @@ jobs:
       - name: Start scan
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "https://azure-staging.blacklock.co.nz/api/scans/${{ secrets.SCAN_ID }}/start/"
+          url: "https://app.blacklock.io/api/scans/${{ secrets.SCAN_ID }}/start/"
           method: POST
           customHeaders: |
             {
