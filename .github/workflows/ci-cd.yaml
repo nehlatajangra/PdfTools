@@ -1,3 +1,67 @@
+#name: CI/CD
+#
+#on:
+#  push:
+#    branches:
+#      - main
+#
+#jobs:
+#  sbom-scan:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Start SBOM Scan
+#        run: |
+#          curl --fail --location --request POST \
+#            -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
+#            "https://3c3c-223-184-215-81.ngrok-free.app/api/sbom-projects/${{ secrets.PROJECT_ID }}/start/"
+#
+#      - name: Wait for Scan Completion
+#        run: |
+#          while true; do
+#            RESPONSE=$(curl -s \
+#              -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
+#              "https://3c3c-223-184-215-81.ngrok-free.app/api/sbom-projects/${{ secrets.PROJECT_ID }}/result/")
+#
+#            echo "$RESPONSE"
+#
+#            STATUS=$(echo "$RESPONSE" | jq -r '.status')
+#
+#            if [ "$STATUS" = "completed" ]; then
+#              echo "SBOM scan completed."
+#              break
+#            fi
+#
+#            if [ "$STATUS" = "failed" ]; then
+#              echo "SBOM scan failed."
+#              exit 1
+#            fi
+#
+#            if [ "$STATUS" = "cancelled" ]; then
+#              echo "SBOM scan cancelled."
+#              exit 1
+#            fi
+#
+#            echo "Waiting 30 seconds..."
+#            sleep 30
+#          done
+#
+#      - name: Download Report
+#        run: |
+#          curl --fail --location \
+#            -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
+#            -o sbom-report.json \
+#            "https://3c3c-223-184-215-81.ngrok-free.app/api/sbom-projects/${{ secrets.PROJECT_ID }}/download/"
+#
+#      - name: Upload Report
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: sbom-report
+#          path: sbom-report.json
+
 name: CI/CD
 
 on:
@@ -6,42 +70,42 @@ on:
       - main
 
 jobs:
-  sbom-scan:
+  sast-scan:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Start SBOM Scan
+      - name: Start SAST Scan
         run: |
           curl --fail --location --request POST \
             -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
-            "https://3c3c-223-184-215-81.ngrok-free.app/api/sbom-projects/${{ secrets.PROJECT_ID }}/start/"
+            "https://3c3c-223-184-215-81.ngrok-free.app/api/sast-projects/${{ secrets.SAST_PROJECT_ID }}/start/"
 
       - name: Wait for Scan Completion
         run: |
           while true; do
             RESPONSE=$(curl -s \
               -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
-              "https://3c3c-223-184-215-81.ngrok-free.app/api/sbom-projects/${{ secrets.PROJECT_ID }}/result/")
+              "https://3c3c-223-184-215-81.ngrok-free.app/api/sast-projects/${{ secrets.SAST_PROJECT_ID }}/result/")
 
             echo "$RESPONSE"
 
             STATUS=$(echo "$RESPONSE" | jq -r '.status')
 
             if [ "$STATUS" = "completed" ]; then
-              echo "SBOM scan completed."
+              echo "SAST scan completed."
               break
             fi
 
             if [ "$STATUS" = "failed" ]; then
-              echo "SBOM scan failed."
+              echo "SAST scan failed."
               exit 1
             fi
 
             if [ "$STATUS" = "cancelled" ]; then
-              echo "SBOM scan cancelled."
+              echo "SAST scan cancelled."
               exit 1
             fi
 
@@ -53,11 +117,11 @@ jobs:
         run: |
           curl --fail --location \
             -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
-            -o sbom-report.json \
-            "https://3c3c-223-184-215-81.ngrok-free.app/api/sbom-projects/${{ secrets.PROJECT_ID }}/download/"
+            -o sast-report.json \
+            "https://3c3c-223-184-215-81.ngrok-free.app/api/sast-projects/${{ secrets.SAST_PROJECT_ID }}/download/"
 
       - name: Upload Report
         uses: actions/upload-artifact@v4
         with:
-          name: sbom-report
-          path: sbom-report.json
+          name: sast-report
+          path: sast-report.json
