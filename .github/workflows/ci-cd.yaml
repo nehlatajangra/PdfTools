@@ -77,7 +77,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Start SAST Scan
+      - name: Start SAST  Scan
         run: |
           curl --fail --location --request POST \
             -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
