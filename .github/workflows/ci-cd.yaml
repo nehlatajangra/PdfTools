@@ -26,7 +26,7 @@ jobs:
       - name: Wait for Scan Completion
         shell: bash
         run: |
-          while true; do
+          while true; do 
             RESPONSE=$(curl -s \
               -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
               "https://3c3c-223-184-215-81.ngrok-free.app/api/sbom-projects/${{ secrets.PROJECT_ID }}/result/")
