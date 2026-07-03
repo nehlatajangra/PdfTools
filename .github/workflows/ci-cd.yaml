@@ -16,7 +16,7 @@ jobs:
       - name: Start SBOM Scan
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "http://127.0.0.1:8000/api/sbom-projects/${{ secrets.PROJECT_ID }}/start/"
+          url: "https://3c3c-223-184-215-81.ngrok-free.app/api/sbom-projects/${{ secrets.PROJECT_ID }}/start/"
           method: "POST"
           customHeaders: '{"Api-Key":"${{ secrets.BLACKLOCK_API_KEY }}"}'
           timeout: 30000
@@ -29,9 +29,9 @@ jobs:
           while true; do
             RESPONSE=$(curl -s \
               -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
-              "http://127.0.0.1:8000/api/sbom-projects/${{ secrets.PROJECT_ID }}/result/")
+              "https://3c3c-223-184-215-81.ngrok-free.app/api/sbom-projects/${{ secrets.PROJECT_ID }}/result/")
 
-            echo "Response: $RESPONSE"
+            echo "$RESPONSE"
 
             STATUS=$(echo "$RESPONSE" | jq -r '.status')
 
@@ -50,15 +50,13 @@ jobs:
               exit 1
             fi
 
-            echo "Scan still running. Waiting 30 seconds..."
+            echo "Waiting 30 seconds..."
             sleep 30
           done
 
-      - name: Download SBOM Report
+      - name: Download Report
         shell: bash
         run: |
-          RESPONSE=$(curl -s \
+          curl -s \
             -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
-            "http://127.0.0.1:8000/api/sbom-projects/${{ secrets.PROJECT_ID }}/download/")
-
-          echo "$RESPONSE"
+            "https://3c3c-223-184-215-81.ngrok-free.app/api/sbom-projects/${{ secrets.PROJECT_ID }}/download/"
