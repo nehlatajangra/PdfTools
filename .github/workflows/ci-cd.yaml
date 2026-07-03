@@ -1,0 +1,64 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sbom-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Start SBOM Scan
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: "http://127.0.0.1:8000/api/sbom-projects/${{ secrets.PROJECT_ID }}/start/"
+          method: "POST"
+          customHeaders: '{"Api-Key":"${{ secrets.BLACKLOCK_API_KEY }}"}'
+          timeout: 30000
+          retry: 2
+          retryWait: 3000
+
+      - name: Wait for Scan Completion
+        shell: bash
+        run: |
+          while true; do
+            RESPONSE=$(curl -s \
+              -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
+              "http://127.0.0.1:8000/api/sbom-projects/${{ secrets.PROJECT_ID }}/result/")
+
+            echo "Response: $RESPONSE"
+
+            STATUS=$(echo "$RESPONSE" | jq -r '.status')
+
+            if [ "$STATUS" = "completed" ]; then
+              echo "SBOM scan completed."
+              break
+            fi
+
+            if [ "$STATUS" = "failed" ]; then
+              echo "SBOM scan failed."
+              exit 1
+            fi
+
+            if [ "$STATUS" = "cancelled" ]; then
+              echo "SBOM scan cancelled."
+              exit 1
+            fi
+
+            echo "Scan still running. Waiting 30 seconds..."
+            sleep 30
+          done
+
+      - name: Download SBOM Report
+        shell: bash
+        run: |
+          RESPONSE=$(curl -s \
+            -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
+            "http://127.0.0.1:8000/api/sbom-projects/${{ secrets.PROJECT_ID }}/download/")
+
+          echo "$RESPONSE"
