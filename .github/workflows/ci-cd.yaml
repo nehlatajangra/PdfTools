@@ -14,11 +14,11 @@ jobs:
         uses: actions/checkout@v4
 
 
-      - name: Start SAST Scan
+      - name: Start SBOM Scan
         run: |
           curl --fail --location --request POST \
             -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
-            "https://azure-staging.blacklock.co.nz/api/sast/${{ secrets.SAST_PROJECT_ID }}/start/"
+            "https://azure-staging.blacklock.co.nz/api/sbom/${{ secrets.PROJECT_ID }}/start/"
 
 #      - name: Wait for Scan Completion
 #        run: |
