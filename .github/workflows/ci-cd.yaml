@@ -13,6 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+
       - name: Start SBOM Scan
         run: |
           curl --fail --location --request POST \
