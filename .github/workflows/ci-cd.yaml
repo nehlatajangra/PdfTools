@@ -50,22 +50,22 @@ jobs:
             sleep 30
           done
 
-      - name: Download Report
+      - name: Download PDF Report
         run: |
-          curl --fail --location \
+          curl --location \
             -D headers.txt \
             -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
-            -o sbom-report.pdf \
+            --output sbom-report.pdf \
             "https://azure-staging.blacklock.co.nz/api/sbom/${{ secrets.PROJECT_ID }}/download/"
-          
-          echo "=== Response Headers ==="
+      
+          echo "=== Headers ==="
           cat headers.txt
-          
+      
           echo "=== File Type ==="
           file sbom-report.pdf
-          
-          echo "=== First 200 bytes ==="
-          head -c 200 sbom-report.pdf
+      
+          echo "=== File Size ==="
+          ls -lh sbom-report.pdf
 
 #name: CI/CD
 #
