@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  sbom-scan:
+  sast-scan:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v4
 
 
-      - name: Start SBOM Scan
+      - name: Start SAST Scan
         run: |
           curl --fail --location --request POST \
             -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
