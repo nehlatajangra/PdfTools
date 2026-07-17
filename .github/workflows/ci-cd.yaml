@@ -54,14 +54,19 @@ jobs:
         run: |
           curl --fail --location \
             -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
-            -o sbom-report.json \
+            -o sbom-report.pdf \
             "https://azure-staging.blacklock.co.nz/api/sbom/${{ secrets.PROJECT_ID }}/download/"
+
+      - name: Verify Report
+        run: |
+          ls -lh sbom-report.pdf
+          file sbom-report.pdf
 
       - name: Upload Report
         uses: actions/upload-artifact@v4
         with:
           name: sbom-report
-          path: sbom-report.json
+          path: sbom-report.pdf
 
 #name: CI/CD
 #
