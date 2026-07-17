@@ -20,52 +20,52 @@ jobs:
             -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
             "https://azure-staging.blacklock.co.nz/api/sast/${{ secrets.SAST_PROJECT_ID }}/start/"
 
-      - name: Wait for Scan Completion
-        run: |
-          while true; do
-            RESPONSE=$(curl -s \
-              -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
-              "https://azure-staging.blacklock.co.nz/api/sast/${{ secrets.SAST_PROJECT_ID }}/result/")
-
-            echo "$RESPONSE"
-
-            STATUS=$(echo "$RESPONSE" | jq -r '.status')
-
-            if [ "$STATUS" = "completed" ]; then
-              echo "SBOM scan completed."
-              break
-            fi
-
-            if [ "$STATUS" = "failed" ]; then
-              echo "SBOM scan failed."
-              exit 1
-            fi
-
-            if [ "$STATUS" = "cancelled" ]; then
-              echo "SBOM scan cancelled."
-              exit 1
-            fi
-
-            echo "Waiting 30 seconds..."
-            sleep 30
-          done
-
-      - name: Download PDF Report
-        run: |
-          curl --location \
-            -D headers.txt \
-            -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
-            --output sbom-report.pdf \
-            "https://azure-staging.blacklock.co.nz/api/sast/${{ secrets.SAST_PROJECT_ID }}/download/"
-      
-          echo "=== Headers ==="
-          cat headers.txt
-      
-          echo "=== File Type ==="
-          file sbom-report.pdf
-      
-          echo "=== File Size ==="
-          ls -lh sbom-report.pdf
+#      - name: Wait for Scan Completion
+#        run: |
+#          while true; do
+#            RESPONSE=$(curl -s \
+#              -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
+#              "https://azure-staging.blacklock.co.nz/api/sast/${{ secrets.SAST_PROJECT_ID }}/result/")
+#
+#            echo "$RESPONSE"
+#
+#            STATUS=$(echo "$RESPONSE" | jq -r '.status')
+#
+#            if [ "$STATUS" = "completed" ]; then
+#              echo "SBOM scan completed."
+#              break
+#            fi
+#
+#            if [ "$STATUS" = "failed" ]; then
+#              echo "SBOM scan failed."
+#              exit 1
+#            fi
+#
+#            if [ "$STATUS" = "cancelled" ]; then
+#              echo "SBOM scan cancelled."
+#              exit 1
+#            fi
+#
+#            echo "Waiting 30 seconds..."
+#            sleep 30
+#          done
+#
+#      - name: Download PDF Report
+#        run: |
+#          curl --location \
+#            -D headers.txt \
+#            -H "Api-Key: ${{ secrets.BLACKLOCK_API_KEY }}" \
+#            --output sbom-report.pdf \
+#            "https://azure-staging.blacklock.co.nz/api/sast/${{ secrets.SAST_PROJECT_ID }}/download/"
+#
+#          echo "=== Headers ==="
+#          cat headers.txt
+#
+#          echo "=== File Type ==="
+#          file sbom-report.pdf
+#
+#          echo "=== File Size ==="
+#          ls -lh sbom-report.pdf
 
 #name: CI/CD
 #
